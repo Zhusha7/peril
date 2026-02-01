@@ -12,12 +12,11 @@ async function main() {
     const confirmChannel = await connection.createConfirmChannel();
     const playingState: PlayingState = { isPaused: true };
     const topic = await declareAndBind(connection, ExchangePerilTopic, GameLogSlug, `${GameLogSlug}.*`, "durable");
-    publishJSON(confirmChannel, ExchangePerilDirect, PauseKey, playingState);
     console.log("Connection to confirm channel successful");
     printServerHelp();
     let loop = true;
     while (loop) {
-        let input = await getInput("Select an option: ");
+        let input = await getInput("> ");
         if (input.length === 0) continue;
         switch (input[0]) {
             case "pause":
