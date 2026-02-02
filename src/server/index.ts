@@ -1,9 +1,8 @@
 import amqp from "amqplib";
 import { getInput, printServerHelp } from "../internal/gamelogic/gamelogic.js";
 import type { PlayingState } from "../internal/gamelogic/gamestate.js";
-import { declareAndBind } from "../internal/pubsub/declareAndBind.js";
 import { publishJSON } from "../internal/pubsub/publishJSON.js";
-import { ExchangePerilDirect, ExchangePerilTopic, GameLogSlug, PauseKey } from "../internal/routing/routing.js";
+import { ExchangePerilDirect, PauseKey } from "../internal/routing/routing.js";
 
 async function main() {
     console.log("Starting Peril server...");
@@ -11,7 +10,7 @@ async function main() {
     const connection = await amqp.connect(connectionString);
     const confirmChannel = await connection.createConfirmChannel();
     const playingState: PlayingState = { isPaused: true };
-    const topic = await declareAndBind(connection, ExchangePerilTopic, GameLogSlug, `${GameLogSlug}.*`, "durable");
+    // const [logChannel, logQueue] = await declareAndBind(connection, ExchangePerilTopic, GameLogSlug, `${GameLogSlug}.*`, "durable");
     console.log("Connection to confirm channel successful");
     printServerHelp();
     let loop = true;
