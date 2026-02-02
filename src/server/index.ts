@@ -10,7 +10,7 @@ async function main() {
     const connection = await amqp.connect(connectionString);
     const confirmChannel = await connection.createConfirmChannel();
     const playingState: PlayingState = { isPaused: true };
-    // const [logChannel, logQueue] = await declareAndBind(connection, ExchangePerilTopic, GameLogSlug, `${GameLogSlug}.*`, "durable");
+    // const [logChannel, logQueue] = await declareAndBind(connection, ExchangePerilTopic, GameLogSlug, `${GameLogSlug}.*`, SimpleQueueType.durable);
     console.log("Connection to confirm channel successful");
     printServerHelp();
     let loop = true;

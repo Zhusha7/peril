@@ -3,6 +3,7 @@ import { clientWelcome, commandStatus, getInput, printClientHelp, printQuit } fr
 import { GameState } from "../internal/gamelogic/gamestate.js";
 import { commandMove } from "../internal/gamelogic/move.js";
 import { commandSpawn } from "../internal/gamelogic/spawn.js";
+import { SimpleQueueType } from "../internal/pubsub/declareAndBind.js";
 import { publishJSON } from "../internal/pubsub/publishJSON.js";
 import { subscribeJSON } from "../internal/pubsub/subscribeJSON.js";
 import { ArmyMovesPrefix, ExchangePerilDirect, ExchangePerilTopic, PauseKey } from "../internal/routing/routing.js";
@@ -20,7 +21,7 @@ async function main() {
         ExchangePerilDirect,
         `${PauseKey}.${username}`,
         PauseKey,
-        "transient",
+        SimpleQueueType.transient,
         handlerPause(gamestate),
     );
     await subscribeJSON(
@@ -28,7 +29,7 @@ async function main() {
         ExchangePerilTopic,
         `${ArmyMovesPrefix}.${username}`,
         `${ArmyMovesPrefix}.*`,
-        "transient",
+        SimpleQueueType.transient,
         handlerMove(gamestate),
     );
     let loop = true;
