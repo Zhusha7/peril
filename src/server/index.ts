@@ -22,6 +22,10 @@ async function main() {
         handlerLog(),
     );
     console.log("Connection to confirm channel successful");
+    if (!process.stdin.isTTY) {
+        console.log("Non-interactive mode: skipping command input.");
+        return;
+    }
     printServerHelp();
     let loop = true;
     while (loop) {

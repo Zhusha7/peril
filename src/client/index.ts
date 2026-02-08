@@ -1,5 +1,12 @@
 import amqp, { type ConfirmChannel } from "amqplib";
-import { clientWelcome, commandStatus, getInput, printClientHelp, printQuit } from "../internal/gamelogic/gamelogic.js";
+import {
+    clientWelcome,
+    commandStatus,
+    getInput,
+    getMaliciousLog,
+    printClientHelp,
+    printQuit,
+} from "../internal/gamelogic/gamelogic.js";
 import { GameState } from "../internal/gamelogic/gamestate.js";
 import type { GameLog } from "../internal/gamelogic/logs.js";
 import { commandMove } from "../internal/gamelogic/move.js";
@@ -80,7 +87,14 @@ async function main() {
                 printClientHelp();
                 break;
             case "spam":
-                console.log("Spamming not allowed yet!");
+                if (!input[1]) {
+                    console.log("Usage: spawm <number>");
+                } else {
+                    for (let i = 0; i < Number.parseInt(input[1]); i++) {
+                        const log = getMaliciousLog();
+                        publishGameLog(confirmChannel, username, log);
+                    }
+                }
                 break;
             case "quit":
                 printQuit();
