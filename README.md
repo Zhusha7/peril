@@ -36,7 +36,7 @@ Use the npm script included with startup project to setup RabbitMQ docker contai
 npm run rabbit:start
 ```
 
-**Important!** You need to setup 2-3 durable exchanges in RabbitMQ management UI for the code to work:
+**Important!** You need to setup 2-3 durable exchanges in RabbitMQ management UI for the code to work. `peril_dlx` can be excuded:
 
 ![alt text](/readme_screenshots/image.png)
 
